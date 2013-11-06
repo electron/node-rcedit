@@ -1,0 +1,28 @@
+{
+  "name": "node-rcedit",
+  "version": "0.1.0",
+  "description": "Node module to edit resources of exe",
+  "main": "lib/rcedit.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atom/node-rcedit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/atom/node-rcedit/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/atom/node-nslog/raw/master/LICENSE.md"
+    }
+  ],
+  "devDependencies": {
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-cli": "~0.1.8",
+    "grunt": "~0.4.1",
+    "grunt-shell": "~0.2.2",
+    "grunt-coffeelint": "0.0.6"
+  }
+}
+
