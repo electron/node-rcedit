@@ -1,5 +1,5 @@
 {
-  "name": "node-rcedit",
+  "name": "rcedit",
   "version": "0.1.0",
   "description": "Node module to edit resources of exe",
   "main": "lib/rcedit.js",
