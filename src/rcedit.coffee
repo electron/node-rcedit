@@ -20,6 +20,10 @@ module.exports = (exe, options, callback) ->
       args.push "--set-#{name}"
       args.push options[name]
 
+  if process.platform != "win32"
+    args.unshift(rcedit)
+    rcedit = "wine"
+
   child = spawn rcedit, args
 
   stderr = ''
