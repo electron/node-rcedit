@@ -27,11 +27,13 @@ module.exports = (exe, options, callback) ->
   child = spawn rcedit, args
 
   stderr = ''
-  child.on 'error', (err) ->
-    callback err
+  error = null
+  child.on 'error', (err) -> error ?= err
   child.stderr.on 'data', (data) -> stderr += data
   child.on 'close', (code) ->
-    if code is 0
+    if error?
+      callback error
+    else if code is 0
       callback null
     else
       callback stderr
