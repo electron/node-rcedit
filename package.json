@@ -1,6 +1,6 @@
 {
   "name": "rcedit",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Node module to edit resources of exe",
   "main": "lib/rcedit.js",
   "scripts": {
@@ -27,4 +27,3 @@
     "grunt-coffeelint": "0.0.6"
   }
 }
-
