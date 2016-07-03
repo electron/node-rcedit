@@ -13,7 +13,8 @@ Node module to edit resources of Windows executables.
 ```coffeescript
 rcedit = require 'rcedit'
 ```
-On platforms other then Windows you will need to have [Wine](http://winehq.org) installed and in the system path.
+On platforms other than Windows, you will need to have [Wine](http://winehq.org)
+1.6 or later installed and in the system path.
 
 ### `rcedit(exePath, options, callback)`
 
