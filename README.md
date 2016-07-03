@@ -1,6 +1,6 @@
 # node-rcedit
 
-Node module to edit resources of exe.
+Node module to edit resources of Windows executables.
 
 ## Building
 
@@ -15,15 +15,17 @@ rcedit = require 'rcedit'
 ```
 On platforms other then Windows you will need to have [Wine](http://winehq.org) installed and in the system path.
 
-### rcedit(exePath, options, callback)
+### `rcedit(exePath, options, callback)`
 
-Change `exePath` with `options`, the `callback` would be called with `(error)`
-when the command is done.
+`exePath` is the path to the Windows executable to be modified.
 
-The `options` is an object that can contain following fields:
+`options` is an object that can contain following fields:
 
-* `version-string` - An object containings properties to change of `exePath`'s
+* `version-string` - An object containing properties to change the `exePath`'s
   version string.
 * `file-version` - File's version to change to.
 * `product-version` - Product's version to change to.
-* `icon` - Path to the icon file to set as `exePath`'s default icon.
+* `icon` - Path to the icon file (`.ico`) to set as the `exePath`'s default icon.
+
+`callback` is the `Function` called when the command completes. The function
+signature is `function (error)`.
