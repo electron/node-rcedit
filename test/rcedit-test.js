@@ -33,6 +33,7 @@ describe('rcedit(exePath, options, callback)', function () {
       'file-version': '3.4.5.6',
       'product-version': '4.5.6.7'
     }
+
     rcedit(exePath, options, function (error) {
       if (error != null) return done(error)
 
@@ -48,6 +49,24 @@ describe('rcedit(exePath, options, callback)', function () {
 
         done()
       })
+    })
+  })
+
+  it('supports non-ASCII characters in the .exe path', function (done) {
+    var unicodePath = path.join(path.dirname(exePath), 'äeiöü.exe')
+    fs.renameSync(exePath, unicodePath)
+
+    var options = {
+      'version-string': {
+        FileDescription: 'foo',
+        ProductName: 'bar'
+      },
+      'file-version': '8.0.8'
+    }
+
+    rcedit(unicodePath, options, function (error) {
+      if (error != null) return done(error)
+      done()
     })
   })
 
