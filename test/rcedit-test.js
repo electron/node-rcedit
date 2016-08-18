@@ -13,9 +13,11 @@ describe('rcedit(exePath, options, callback)', function () {
   this.timeout(60000)
 
   var exePath = null
+  var tempPath = null
 
   beforeEach(function () {
-    exePath = path.join(temp.mkdirSync('node-rcedit-'), 'electron.exe')
+    tempPath = temp.mkdirSync('node-rcedit-')
+    exePath = path.join(tempPath, 'electron.exe')
     var fixturesExePath = path.join(__dirname, 'fixtures', 'electron.exe')
     fs.writeFileSync(exePath, fs.readFileSync(fixturesExePath))
   })
@@ -29,8 +31,10 @@ describe('rcedit(exePath, options, callback)', function () {
         ProductName: 'Millhouse'
       },
       'file-version': '3.4.5.6',
-      'product-version': '4.5.6.7'
+      'product-version': '4.5.6.7',
+      icon: path.join(__dirname, 'fixtures', 'app.ico')
     }
+
     rcedit(exePath, options, function (error) {
       if (error != null) return done(error)
 
@@ -46,6 +50,70 @@ describe('rcedit(exePath, options, callback)', function () {
 
         done()
       })
+    })
+  })
+
+  it('supports non-ASCII characters in the .exe path', function (done) {
+    var unicodePath = path.join(path.dirname(exePath), 'äeiöü.exe')
+    fs.renameSync(exePath, unicodePath)
+
+    var options = {
+      'version-string': {
+        FileDescription: 'foo',
+        ProductName: 'bar'
+      },
+      'file-version': '8.0.8'
+    }
+
+    rcedit(unicodePath, options, function (error) {
+      if (error != null) return done(error)
+      done()
+    })
+  })
+
+  it('supports a product version of 1', function (done) {
+    var options = {
+      'product-version': '1'
+    }
+
+    rcedit(exePath, options, function (error) {
+      if (error != null) return done(error)
+
+      rcinfo(exePath, function (error, info) {
+        if (error != null) return done(error)
+
+        assert.equal(info.ProductVersion, '1.0.0.0')
+
+        done()
+      })
+    })
+  })
+
+  it('supports a product version of 1.0', function (done) {
+    var options = {
+      'product-version': '1.0'
+    }
+
+    rcedit(exePath, options, function (error) {
+      if (error != null) return done(error)
+
+      rcinfo(exePath, function (error, info) {
+        if (error != null) return done(error)
+
+        assert.equal(info.ProductVersion, '1.0.0.0')
+
+        done()
+      })
+    })
+  })
+
+  it('reports an error when the .exe path does not exist', function (done) {
+    rcedit(path.join(tempPath, 'does-not-exist.exe'), {'file-version': '3.4.5.6'}, function (error) {
+      assert.ok(error instanceof Error)
+      assert.notEqual(error.message.indexOf('rcedit.exe failed with exit code'), -1)
+      assert.notEqual(error.message.indexOf('Fatal error: Unable to load file'), -1)
+
+      done()
     })
   })
 })
