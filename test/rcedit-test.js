@@ -5,6 +5,10 @@ var rcedit = require('..')
 var rcinfo = require('rcinfo')
 var temp = require('temp').track()
 
+var beforeEach = global.beforeEach
+var describe = global.describe
+var it = global.it
+
 describe('rcedit(exePath, options, callback)', function () {
   this.timeout(60000)
 
