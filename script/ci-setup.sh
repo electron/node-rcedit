@@ -2,6 +2,7 @@
 
 case "$TRAVIS_OS_NAME" in
   "linux")
+    sudo dpkg --add-architecture i386
     sudo apt-get update
     sudo apt-get install -y wine1.6
     ;;
