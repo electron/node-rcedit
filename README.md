@@ -6,12 +6,12 @@ Node module to edit resources of Windows executables.
 
 * Clone the repository
 * Run `npm install`
-* Run `grunt` to compile the CoffeeScript code
+* Run `npm test` to run the tests
 
 ## Docs
 
-```coffeescript
-rcedit = require 'rcedit'
+```js
+var rcedit = require('rcedit')
 ```
 On platforms other than Windows, you will need to have [Wine](http://winehq.org)
 1.6 or later installed and in the system path.
