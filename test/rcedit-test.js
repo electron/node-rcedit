@@ -31,7 +31,8 @@ describe('rcedit(exePath, options, callback)', function () {
         ProductName: 'Millhouse'
       },
       'file-version': '3.4.5.6',
-      'product-version': '4.5.6.7'
+      'product-version': '4.5.6.7',
+      icon: path.join(__dirname, 'fixtures', 'app.ico')
     }
 
     rcedit(exePath, options, function (error) {
