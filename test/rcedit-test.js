@@ -6,7 +6,7 @@ var rcinfo = require('rcinfo')
 var temp = require('temp').track()
 
 describe('rcedit(exePath, options, callback)', function () {
-  this.timeout(30000)
+  this.timeout(60000)
 
   var exePath = null
 
