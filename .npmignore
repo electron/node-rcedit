@@ -5,3 +5,7 @@ npm-debug.log
 script/
 spec/
 src/
+test/
+script/
+.travis.yml
+appveyor.yml

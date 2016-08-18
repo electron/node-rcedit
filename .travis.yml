@@ -1,0 +1,33 @@
+sudo: required
+
+os:
+- linux
+- osx
+
+dist: trusty
+
+osx_image: xcode8
+
+language: node_js
+
+node_js:
+- '4'
+
+cache:
+- apt: true
+
+before_install: script/ci-setup.sh
+
+env:
+  global:
+    # prevent wine popup dialogs about installing additional packages
+    - WINEDLLOVERRIDES="mscoree,mshtml="
+
+branches:
+  only:
+  - master
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
