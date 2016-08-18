@@ -13,12 +13,7 @@
   "bugs": {
     "url": "https://github.com/atom/node-rcedit/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://github.com/atom/node-nslog/raw/master/LICENSE.md"
-    }
-  ],
+  "license": "MIT",
   "devDependencies": {
     "mocha": "^3.0.2",
     "rcinfo": "^0.1.3",
