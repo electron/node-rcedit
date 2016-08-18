@@ -13,9 +13,11 @@ describe('rcedit(exePath, options, callback)', function () {
   this.timeout(60000)
 
   var exePath = null
+  var tempPath = null
 
   beforeEach(function () {
-    exePath = path.join(temp.mkdirSync('node-rcedit-'), 'electron.exe')
+    tempPath = temp.mkdirSync('node-rcedit-')
+    exePath = path.join(tempPath, 'electron.exe')
     var fixturesExePath = path.join(__dirname, 'fixtures', 'electron.exe')
     fs.writeFileSync(exePath, fs.readFileSync(fixturesExePath))
   })
@@ -46,6 +48,16 @@ describe('rcedit(exePath, options, callback)', function () {
 
         done()
       })
+    })
+  })
+
+  it('reports an error when the .exe path does not exist', function (done) {
+    rcedit(path.join(tempPath, 'does-not-exist.exe'), {'file-version': '3.4.5.6'}, function (error) {
+      assert.ok(error instanceof Error)
+      assert.notEqual(error.message.indexOf('rcedit.exe failed with exit code'), -1)
+      assert.notEqual(error.message.indexOf('Fatal error: Unable to load file'), -1)
+
+      done()
     })
   })
 })
