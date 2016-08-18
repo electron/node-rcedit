@@ -7,3 +7,5 @@ spec/
 src/
 test/
 script/
+.travis.yml
+appveyor.yml
