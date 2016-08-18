@@ -70,6 +70,42 @@ describe('rcedit(exePath, options, callback)', function () {
     })
   })
 
+  it('supports a product version of 1', function (done) {
+    var options = {
+      'product-version': '1'
+    }
+
+    rcedit(exePath, options, function (error) {
+      if (error != null) return done(error)
+
+      rcinfo(exePath, function (error, info) {
+        if (error != null) return done(error)
+
+        assert.equal(info.ProductVersion, '1.0.0.0')
+
+        done()
+      })
+    })
+  })
+
+  it('supports a product version of 1.0', function (done) {
+    var options = {
+      'product-version': '1.0'
+    }
+
+    rcedit(exePath, options, function (error) {
+      if (error != null) return done(error)
+
+      rcinfo(exePath, function (error, info) {
+        if (error != null) return done(error)
+
+        assert.equal(info.ProductVersion, '1.0.0.0')
+
+        done()
+      })
+    })
+  })
+
   it('reports an error when the .exe path does not exist', function (done) {
     rcedit(path.join(tempPath, 'does-not-exist.exe'), {'file-version': '3.4.5.6'}, function (error) {
       assert.ok(error instanceof Error)
