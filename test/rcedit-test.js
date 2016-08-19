@@ -116,4 +116,13 @@ describe('rcedit(exePath, options, callback)', function () {
       done()
     })
   })
+
+  it('reports an error when the icon path does not exist', function (done) {
+    rcedit(exePath, {icon: path.join(tempPath, 'does-not-exist.ico')}, function (error) {
+      assert.ok(error instanceof Error)
+      assert.notEqual(error.message.indexOf('Fatal error: Unable to set icon'), -1)
+
+      done()
+    })
+  })
 })
