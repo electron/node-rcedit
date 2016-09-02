@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/atom/node-rcedit.git"
+    "url": "https://github.com/electron/node-rcedit.git"
   },
   "bugs": {
-    "url": "https://github.com/atom/node-rcedit/issues"
+    "url": "https://github.com/electron/node-rcedit/issues"
   },
   "license": "MIT",
   "devDependencies": {
