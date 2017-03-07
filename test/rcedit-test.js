@@ -113,12 +113,17 @@ describe('rcedit(exePath, options, callback)', function () {
       'requested-execution-level': 'requireAdministrator'
     }
 
+	// first read in the file and test that requireAdministrator is not present
+    var text = fs.readFileSync(exePath, 'utf8')
+    var response = textgrep.grep(text, '(requireAdministrator)', '{1}', 'gm')
+    assert.notEqual(response, 'requireAdministrator')
+
     rcedit(exePath, options, function (error) {
       if (error != null) return done(error)
 
       // read in the exe as text
-      var text = fs.readFileSync(exePath, 'utf8')
-      var response = textgrep.grep(text, '(requireAdministrator)', '{1}', 'gm')
+      text = fs.readFileSync(exePath, 'utf8')
+      response = textgrep.grep(text, '(requireAdministrator)', '{1}', 'gm')
 
       assert.equal(response, 'requireAdministrator')
 
