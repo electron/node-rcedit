@@ -4,6 +4,7 @@ var path = require('path')
 var rcedit = require('..')
 var rcinfo = require('rcinfo')
 var temp = require('temp').track()
+var textgrep = require('textgrep')
 
 var beforeEach = global.beforeEach
 var describe = global.describe
@@ -104,6 +105,24 @@ describe('rcedit(exePath, options, callback)', function () {
 
         done()
       })
+    })
+  })
+
+  it('supports setting requestedExecutionLevel to requireAdministrator', function (done) {
+    var options = {
+      'requested-execution-level': 'requireAdministrator'
+    }
+
+    rcedit(exePath, options, function (error) {
+      if (error != null) return done(error)
+
+      // read in the exe as text
+      var text = fs.readFileSync(exePath, 'utf8')
+      var response = textgrep.grep(text, '(requireAdministrator)', '{1}', 'gm')
+
+      assert.equal(response, 'requireAdministrator')
+
+      done()
     })
   })
 
