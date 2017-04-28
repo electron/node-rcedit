@@ -4,7 +4,6 @@ var path = require('path')
 var rcedit = require('..')
 var rcinfo = require('rcinfo')
 var temp = require('temp').track()
-var textgrep = require('textgrep')
 
 var beforeEach = global.beforeEach
 var describe = global.describe
@@ -113,19 +112,17 @@ describe('rcedit(exePath, options, callback)', function () {
       'requested-execution-level': 'requireAdministrator'
     }
 
-	// first read in the file and test that requireAdministrator is not present
+    // first read in the file and test that requireAdministrator is not present
     var text = fs.readFileSync(exePath, 'utf8')
-    var response = textgrep.grep(text, '(requireAdministrator)', '{1}', 'gm')
-    assert.notEqual(response, 'requireAdministrator')
+    assert.equal(text.indexOf('requireAdministrator'), -1)
 
     rcedit(exePath, options, function (error) {
       if (error != null) return done(error)
 
       // read in the exe as text
       text = fs.readFileSync(exePath, 'utf8')
-      response = textgrep.grep(text, '(requireAdministrator)', '{1}', 'gm')
 
-      assert.equal(response, 'requireAdministrator')
+      assert.notEqual(text.indexOf('requireAdministrator'), -1)
 
       done()
     })
