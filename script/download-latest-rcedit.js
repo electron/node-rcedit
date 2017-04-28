@@ -8,7 +8,7 @@ const downloadURL = 'https://ci.appveyor.com/api/projects/electron-bot/rcedit/ar
 const filePath = path.join(__dirname, '..', 'bin', 'rcedit.exe')
 
 process.on('uncaughtException', (error) => {
-  console.log('Dowload failed:', error.message)
+  console.log('Downloading rcedit.exe failed:', error.message)
 })
 
 got.stream(downloadURL).pipe(fs.createWriteStream(filePath))
