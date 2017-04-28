@@ -149,4 +149,22 @@ describe('rcedit(exePath, options, callback)', function () {
       done()
     })
   })
+
+  it('reports an error when the file version is invalid', function (done) {
+    rcedit(exePath, {'file-version': 'foo'}, function (error) {
+      assert.ok(error instanceof Error)
+      assert.notEqual(error.message.indexOf('Fatal error: Unable to parse version string for FileVersion'), -1)
+
+      done()
+    })
+  })
+
+  it('reports an error when the product version is invalid', function (done) {
+    rcedit(exePath, {'product-version': 'foo'}, function (error) {
+      assert.ok(error instanceof Error)
+      assert.notEqual(error.message.indexOf('Fatal error: Unable to parse version string for ProductVersion'), -1)
+
+      done()
+    })
+  })
 })
