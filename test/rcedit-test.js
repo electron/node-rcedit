@@ -107,6 +107,48 @@ describe('rcedit(exePath, options, callback)', function () {
     })
   })
 
+  it('supports setting requestedExecutionLevel to requireAdministrator', function (done) {
+    var options = {
+      'requested-execution-level': 'requireAdministrator'
+    }
+
+    // first read in the file and test that requireAdministrator is not present
+    var text = fs.readFileSync(exePath, 'utf8')
+    assert.equal(text.indexOf('requireAdministrator'), -1)
+
+    rcedit(exePath, options, function (error) {
+      if (error != null) return done(error)
+
+      // read in the exe as text
+      text = fs.readFileSync(exePath, 'utf8')
+
+      assert.notEqual(text.indexOf('requireAdministrator'), -1)
+
+      done()
+    })
+  })
+
+  it('supports replacing the manifest with a specified manifest file', function (done) {
+    var options = {
+      'application-manifest': path.join(__dirname, 'fixtures', 'electron.manifest')
+    }
+
+    // first read in the file and test that requireAdministrator is not present
+    var text = fs.readFileSync(exePath, 'utf8')
+    assert.equal(text.indexOf('requireAdministrator'), -1)
+
+    rcedit(exePath, options, function (error) {
+      if (error != null) return done(error)
+
+      // read in the exe as text
+      text = fs.readFileSync(exePath, 'utf8')
+
+      assert.notEqual(text.indexOf('requireAdministrator'), -1)
+
+      done()
+    })
+  })
+
   it('reports an error when the .exe path does not exist', function (done) {
     rcedit(path.join(tempPath, 'does-not-exist.exe'), {'file-version': '3.4.5.6'}, function (error) {
       assert.ok(error instanceof Error)

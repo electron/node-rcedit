@@ -30,6 +30,13 @@ On platforms other than Windows, you will need to have [Wine](http://winehq.org)
 * `file-version` - File's version to change to.
 * `product-version` - Product's version to change to.
 * `icon` - Path to the icon file (`.ico`) to set as the `exePath`'s default icon.
+* `requested-execution-level` - Requested execution level to change to, must be
+  either `asInvoker`, `highestAvailable`, or `requireAdministrator`. See
+  [here](https://msdn.microsoft.com/en-us/library/6ad1fshk.aspx#Anchor_9) for
+  more details.
+* `application-manifest` - String path to a local manifest file to use.
+  See [here](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374191.aspx)
+  for more details.
 
 `callback` is the `Function` called when the command completes. The function
 signature is `function (error)`.
