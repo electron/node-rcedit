@@ -30,7 +30,7 @@ On platforms other than Windows, you will need to have [Wine](http://winehq.org)
 * `file-version` - File's version to change to.
 * `product-version` - Product's version to change to.
 * `icon` - Path to the icon file (`.ico`) to set as the `exePath`'s default icon.
-* `requested-execution-level` - Request execution level to change to, must be
+* `requested-execution-level` - Requested execution level to change to, must be
   either `asInvoker`, `highestAvailable`, or `requireAdministrator`. See
   [here](https://msdn.microsoft.com/en-us/library/6ad1fshk.aspx#Anchor_9) for
   more details.
