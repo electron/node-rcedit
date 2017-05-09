@@ -37,6 +37,25 @@ On platforms other than Windows, you will need to have [Wine](http://winehq.org)
 * `application-manifest` - String path to a local manifest file to use.
   See [here](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374191.aspx)
   for more details.
+ 
+`version-string` allows you to set the PE file meta keys, such as in the following example:
+
+```
+var options = {
+
+	'icon': 'res/icon.ico',
+	'file-version': '1.0.0',
+	'product-version': '1.0.0',
+
+	'version-string': {
+		'CompanyName': 'Acme Inc.',
+		'FileDescription': 'A test file',
+		'LegalCopyright': 'Copyright (C) Acme Inc.',
+		'ProductName': 'My Test'
+	}
+
+};
+```
 
 `callback` is the `Function` called when the command completes. The function
 signature is `function (error)`.
