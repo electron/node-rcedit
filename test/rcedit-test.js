@@ -153,7 +153,7 @@ describe('rcedit(exePath, options, callback)', function () {
     rcedit(path.join(tempPath, 'does-not-exist.exe'), {'file-version': '3.4.5.6'}, function (error) {
       assert.ok(error instanceof Error)
       assert.notEqual(error.message.indexOf('rcedit.exe failed with exit code 1.'), -1)
-      assert.notEqual(error.message.indexOf('Fatal error: Unable to load file'), -1)
+      assert.notEqual(error.message.indexOf('Unable to load file'), -1)
 
       done()
     })
