@@ -10,7 +10,9 @@ steps-test: &steps-test
         name: Install Linux Dependencies
         command: |
           if [ "`uname`" == "Linux" ]; then
-            sudo apt-get install --no-install-recommends -y wine
+            sudo dpkg --add-architecture i386
+            sudo apt-get update
+            sudo apt-get install --no-install-recommends -y wine:i386
           fi
     - checkout
     - *step-restore-cache
