@@ -9,11 +9,16 @@ steps-test: &steps-test
     - run:
         name: Install Linux Dependencies
         command: |
-          if [ "`uname`" == "Linux" ]; then
-            sudo dpkg --add-architecture i386
-            sudo apt-get update
-            sudo apt-get install --no-install-recommends -y wine:i386
-          fi
+          case "$(uname)" in
+            Linux)
+              sudo dpkg --add-architecture i386
+              sudo apt-get update
+              sudo apt-get install --no-install-recommends -y wine:i386
+            ;;
+            Darwin)
+              brew install wine
+            ;;
+          esac
     - checkout
     - *step-restore-cache
     - run: yarn
