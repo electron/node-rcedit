@@ -1,7 +1,7 @@
 # node-rcedit
 
-[![Travis Build Status](https://travis-ci.org/electron/node-rcedit.svg?branch=master)](https://travis-ci.org/electron/node-rcedit)
-[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/m880ovvfwukowyne/branch/master?svg=true)](https://ci.appveyor.com/project/electron-bot/node-rcedit/branch/master)
+[![CircleCI build status](https://circleci.com/gh/electron/node-rcedit/tree/master.svg?style=svg)](https://circleci.com/gh/electron/node-rcedit/tree/master)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/m880ovvfwukowyne/branch/master?svg=true)](https://ci.appveyor.com/project/electron-bot/node-rcedit/branch/master)
 
 Node module to edit resources of Windows executables.
 
