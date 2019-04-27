@@ -7,7 +7,7 @@ step-restore-cache: &step-restore-cache
 steps-test: &steps-test
   steps:
     - run:
-        name: Install Linux Dependencies
+        name: Install OS Dependencies
         command: |
           case "$(uname)" in
             Linux)
