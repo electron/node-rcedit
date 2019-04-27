@@ -4,7 +4,8 @@
   "description": "Node module to edit resources of exe",
   "main": "lib/rcedit.js",
   "scripts": {
-    "test": "mocha test/*.js && npm run lint",
+    "mocha": "mocha test/*.js",
+    "test": "npm run lint && npm run mocha",
     "lint": "standard"
   },
   "repository": {
