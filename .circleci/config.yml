@@ -13,7 +13,7 @@ steps-test: &steps-test
             Linux)
               sudo dpkg --add-architecture i386
               sudo apt-get update
-              sudo apt-get install --no-install-recommends -y wine:i386
+              sudo apt-get install --no-install-recommends -y wine32
             ;;
             Darwin)
               brew install wine
