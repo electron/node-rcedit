@@ -10,7 +10,7 @@ steps-test: &steps-test
         name: Install Linux Dependencies
         command: |
           if [ "`uname`" == "Linux" ]; then
-            sudo apt-get install --no-install-recommends -y wine32
+            sudo apt-get install --no-install-recommends -y wine
           fi
     - checkout
     - *step-restore-cache
