@@ -41,12 +41,12 @@ describe('rcedit(exePath, options, callback)', function () {
       rcinfo(exePath, function (error, info) {
         if (error != null) return done(error)
 
-        assert.equal(info.CompanyName, 'Umbrella')
-        assert.equal(info.FileDescription, 'Vanhouten')
-        assert.equal(info.LegalCopyright, 'Maritime')
-        assert.equal(info.ProductName, 'Millhouse')
-        assert.equal(info.FileVersion, '3.4.5.6')
-        assert.equal(info.ProductVersion, '4.5.6.7')
+        assert.strictEqual(info.CompanyName, 'Umbrella')
+        assert.strictEqual(info.FileDescription, 'Vanhouten')
+        assert.strictEqual(info.LegalCopyright, 'Maritime')
+        assert.strictEqual(info.ProductName, 'Millhouse')
+        assert.strictEqual(info.FileVersion, '3.4.5.6')
+        assert.strictEqual(info.ProductVersion, '4.5.6.7')
 
         done()
       })
@@ -82,7 +82,7 @@ describe('rcedit(exePath, options, callback)', function () {
       rcinfo(exePath, function (error, info) {
         if (error != null) return done(error)
 
-        assert.equal(info.ProductVersion, '1.0.0.0')
+        assert.strictEqual(info.ProductVersion, '1.0.0.0')
 
         done()
       })
@@ -100,7 +100,7 @@ describe('rcedit(exePath, options, callback)', function () {
       rcinfo(exePath, function (error, info) {
         if (error != null) return done(error)
 
-        assert.equal(info.ProductVersion, '1.0.0.0')
+        assert.strictEqual(info.ProductVersion, '1.0.0.0')
 
         done()
       })
@@ -114,7 +114,7 @@ describe('rcedit(exePath, options, callback)', function () {
 
     // first read in the file and test that requireAdministrator is not present
     var text = fs.readFileSync(exePath, 'utf8')
-    assert.equal(text.indexOf('requireAdministrator'), -1)
+    assert.strictEqual(text.indexOf('requireAdministrator'), -1)
 
     rcedit(exePath, options, function (error) {
       if (error != null) return done(error)
@@ -122,7 +122,7 @@ describe('rcedit(exePath, options, callback)', function () {
       // read in the exe as text
       text = fs.readFileSync(exePath, 'utf8')
 
-      assert.notEqual(text.indexOf('requireAdministrator'), -1)
+      assert.notStrictEqual(text.indexOf('requireAdministrator'), -1)
 
       done()
     })
@@ -135,7 +135,7 @@ describe('rcedit(exePath, options, callback)', function () {
 
     // first read in the file and test that requireAdministrator is not present
     var text = fs.readFileSync(exePath, 'utf8')
-    assert.equal(text.indexOf('requireAdministrator'), -1)
+    assert.strictEqual(text.indexOf('requireAdministrator'), -1)
 
     rcedit(exePath, options, function (error) {
       if (error != null) return done(error)
@@ -143,44 +143,44 @@ describe('rcedit(exePath, options, callback)', function () {
       // read in the exe as text
       text = fs.readFileSync(exePath, 'utf8')
 
-      assert.notEqual(text.indexOf('requireAdministrator'), -1)
+      assert.notStrictEqual(text.indexOf('requireAdministrator'), -1)
 
       done()
     })
   })
 
   it('reports an error when the .exe path does not exist', function (done) {
-    rcedit(path.join(tempPath, 'does-not-exist.exe'), {'file-version': '3.4.5.6'}, function (error) {
+    rcedit(path.join(tempPath, 'does-not-exist.exe'), { 'file-version': '3.4.5.6' }, function (error) {
       assert.ok(error instanceof Error)
-      assert.notEqual(error.message.indexOf('rcedit.exe failed with exit code 1.'), -1)
-      assert.notEqual(error.message.indexOf('Unable to load file'), -1)
+      assert.notStrictEqual(error.message.indexOf('rcedit.exe failed with exit code 1.'), -1)
+      assert.notStrictEqual(error.message.indexOf('Unable to load file'), -1)
 
       done()
     })
   })
 
   it('reports an error when the icon path does not exist', function (done) {
-    rcedit(exePath, {icon: path.join(tempPath, 'does-not-exist.ico')}, function (error) {
+    rcedit(exePath, { icon: path.join(tempPath, 'does-not-exist.ico') }, function (error) {
       assert.ok(error instanceof Error)
-      assert.notEqual(error.message.indexOf('Fatal error: Unable to set icon'), -1)
+      assert.notStrictEqual(error.message.indexOf('Fatal error: Unable to set icon'), -1)
 
       done()
     })
   })
 
   it('reports an error when the file version is invalid', function (done) {
-    rcedit(exePath, {'file-version': 'foo'}, function (error) {
+    rcedit(exePath, { 'file-version': 'foo' }, function (error) {
       assert.ok(error instanceof Error)
-      assert.notEqual(error.message.indexOf('Fatal error: Unable to parse version string for FileVersion'), -1)
+      assert.notStrictEqual(error.message.indexOf('Fatal error: Unable to parse version string for FileVersion'), -1)
 
       done()
     })
   })
 
   it('reports an error when the product version is invalid', function (done) {
-    rcedit(exePath, {'product-version': 'foo'}, function (error) {
+    rcedit(exePath, { 'product-version': 'foo' }, function (error) {
       assert.ok(error instanceof Error)
-      assert.notEqual(error.message.indexOf('Fatal error: Unable to parse version string for ProductVersion'), -1)
+      assert.notStrictEqual(error.message.indexOf('Fatal error: Unable to parse version string for ProductVersion'), -1)
 
       done()
     })
