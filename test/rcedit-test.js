@@ -1,29 +1,43 @@
-var assert = require('assert')
-var fs = require('fs')
-var path = require('path')
-var rcedit = require('..')
-var rcinfo = require('rcinfo')
-var temp = require('temp').track()
+/* eslint-env node, mocha */
 
-var beforeEach = global.beforeEach
-var describe = global.describe
-var it = global.it
+const assert = require('assert')
+const fs = require('fs')
+const path = require('path')
+const { promisify } = require('util')
+const rcedit = require('..')
+const rcinfo = promisify(require('rcinfo'))
+const temp = require('temp').track()
 
-describe('rcedit(exePath, options, callback)', function () {
+const copyFile = promisify(fs.copyFile)
+const readFile = promisify(fs.readFile)
+
+async function assertRceditError (exePath, options, messages) {
+  try {
+    await rcedit(exePath, options)
+    assert.fail('should not succeed')
+  } catch (error) {
+    assert.ok(error instanceof Error)
+    for (const message of messages) {
+      assert.ok(error.message.includes(message))
+    }
+  }
+}
+
+describe('async rcedit(exePath, options)', function () {
   this.timeout(60000)
 
-  var exePath = null
-  var tempPath = null
+  let exePath = null
+  let tempPath = null
 
-  beforeEach(function () {
+  beforeEach(async () => {
     tempPath = temp.mkdirSync('node-rcedit-')
     exePath = path.join(tempPath, 'electron.exe')
-    var fixturesExePath = path.join(__dirname, 'fixtures', 'electron.exe')
-    fs.writeFileSync(exePath, fs.readFileSync(fixturesExePath))
+    const fixturesExePath = path.join(__dirname, 'fixtures', 'electron.exe')
+    await copyFile(fixturesExePath, exePath)
   })
 
-  it('updates the information in the executable', function (done) {
-    var options = {
+  it('updates the information in the executable', async () => {
+    await rcedit(exePath, {
       'version-string': {
         CompanyName: 'Umbrella',
         FileDescription: 'Vanhouten',
@@ -33,156 +47,80 @@ describe('rcedit(exePath, options, callback)', function () {
       'file-version': '3.4.5.6',
       'product-version': '4.5.6.7',
       icon: path.join(__dirname, 'fixtures', 'app.ico')
-    }
-
-    rcedit(exePath, options, function (error) {
-      if (error != null) return done(error)
-
-      rcinfo(exePath, function (error, info) {
-        if (error != null) return done(error)
-
-        assert.strictEqual(info.CompanyName, 'Umbrella')
-        assert.strictEqual(info.FileDescription, 'Vanhouten')
-        assert.strictEqual(info.LegalCopyright, 'Maritime')
-        assert.strictEqual(info.ProductName, 'Millhouse')
-        assert.strictEqual(info.FileVersion, '3.4.5.6')
-        assert.strictEqual(info.ProductVersion, '4.5.6.7')
-
-        done()
-      })
     })
+    const info = await rcinfo(exePath)
+
+    assert.strictEqual(info.CompanyName, 'Umbrella')
+    assert.strictEqual(info.FileDescription, 'Vanhouten')
+    assert.strictEqual(info.LegalCopyright, 'Maritime')
+    assert.strictEqual(info.ProductName, 'Millhouse')
+    assert.strictEqual(info.FileVersion, '3.4.5.6')
+    assert.strictEqual(info.ProductVersion, '4.5.6.7')
   })
 
-  it('supports non-ASCII characters in the .exe path', function (done) {
-    var unicodePath = path.join(path.dirname(exePath), 'äeiöü.exe')
-    fs.renameSync(exePath, unicodePath)
+  it('supports non-ASCII characters in the .exe path', async () => {
+    const unicodePath = path.join(path.dirname(exePath), 'äeiöü.exe')
+    await promisify(fs.rename)(exePath, unicodePath)
 
-    var options = {
+    await rcedit(unicodePath, {
       'version-string': {
         FileDescription: 'foo',
         ProductName: 'bar'
       },
       'file-version': '8.0.8'
-    }
-
-    rcedit(unicodePath, options, function (error) {
-      if (error != null) return done(error)
-      done()
     })
   })
 
-  it('supports a product version of 1', function (done) {
-    var options = {
-      'product-version': '1'
-    }
+  it('supports a product version of 1', async () => {
+    await rcedit(exePath, { 'product-version': '1' })
 
-    rcedit(exePath, options, function (error) {
-      if (error != null) return done(error)
-
-      rcinfo(exePath, function (error, info) {
-        if (error != null) return done(error)
-
-        assert.strictEqual(info.ProductVersion, '1.0.0.0')
-
-        done()
-      })
-    })
+    const info = await rcinfo(exePath)
+    assert.strictEqual(info.ProductVersion, '1.0.0.0')
   })
 
-  it('supports a product version of 1.0', function (done) {
-    var options = {
-      'product-version': '1.0'
-    }
+  it('supports a product version of 1.0', async () => {
+    await rcedit(exePath, { 'product-version': '1.0' })
 
-    rcedit(exePath, options, function (error) {
-      if (error != null) return done(error)
-
-      rcinfo(exePath, function (error, info) {
-        if (error != null) return done(error)
-
-        assert.strictEqual(info.ProductVersion, '1.0.0.0')
-
-        done()
-      })
-    })
+    const info = await rcinfo(exePath)
+    assert.strictEqual(info.ProductVersion, '1.0.0.0')
   })
 
-  it('supports setting requestedExecutionLevel to requireAdministrator', function (done) {
-    var options = {
-      'requested-execution-level': 'requireAdministrator'
-    }
+  it('supports setting requestedExecutionLevel to requireAdministrator', async () => {
+    let exeData = await readFile(exePath, 'utf8')
+    assert.ok(!exeData.includes('requireAdministrator'))
 
-    // first read in the file and test that requireAdministrator is not present
-    var text = fs.readFileSync(exePath, 'utf8')
-    assert.strictEqual(text.indexOf('requireAdministrator'), -1)
+    await rcedit(exePath, { 'requested-execution-level': 'requireAdministrator' })
 
-    rcedit(exePath, options, function (error) {
-      if (error != null) return done(error)
-
-      // read in the exe as text
-      text = fs.readFileSync(exePath, 'utf8')
-
-      assert.notStrictEqual(text.indexOf('requireAdministrator'), -1)
-
-      done()
-    })
+    exeData = await readFile(exePath, 'utf8')
+    assert.ok(exeData.includes('requireAdministrator'))
   })
 
-  it('supports replacing the manifest with a specified manifest file', function (done) {
-    var options = {
-      'application-manifest': path.join(__dirname, 'fixtures', 'electron.manifest')
-    }
+  it('supports replacing the manifest with a specified manifest file', async () => {
+    let exeData = await readFile(exePath, 'utf8')
+    assert.ok(!exeData.includes('requireAdministrator'))
 
-    // first read in the file and test that requireAdministrator is not present
-    var text = fs.readFileSync(exePath, 'utf8')
-    assert.strictEqual(text.indexOf('requireAdministrator'), -1)
+    await rcedit(exePath, { 'application-manifest': path.join(__dirname, 'fixtures', 'electron.manifest') })
 
-    rcedit(exePath, options, function (error) {
-      if (error != null) return done(error)
-
-      // read in the exe as text
-      text = fs.readFileSync(exePath, 'utf8')
-
-      assert.notStrictEqual(text.indexOf('requireAdministrator'), -1)
-
-      done()
-    })
+    exeData = await readFile(exePath, 'utf8')
+    assert.ok(exeData.includes('requireAdministrator'))
   })
 
-  it('reports an error when the .exe path does not exist', function (done) {
-    rcedit(path.join(tempPath, 'does-not-exist.exe'), { 'file-version': '3.4.5.6' }, function (error) {
-      assert.ok(error instanceof Error)
-      assert.notStrictEqual(error.message.indexOf('rcedit.exe failed with exit code 1.'), -1)
-      assert.notStrictEqual(error.message.indexOf('Unable to load file'), -1)
-
-      done()
-    })
+  it('reports an error when the .exe path does not exist', async () => {
+    assertRceditError(path.join(tempPath, 'does-not-exist.exe'), { 'file-version': '3.4.5.6' }, [
+      'rcedit.exe failed with exit code 1.',
+      'Unable to load file'
+    ])
   })
 
-  it('reports an error when the icon path does not exist', function (done) {
-    rcedit(exePath, { icon: path.join(tempPath, 'does-not-exist.ico') }, function (error) {
-      assert.ok(error instanceof Error)
-      assert.notStrictEqual(error.message.indexOf('Fatal error: Unable to set icon'), -1)
-
-      done()
-    })
+  it('reports an error when the icon path does not exist', async () => {
+    assertRceditError(exePath, { icon: path.join(tempPath, 'does-not-exist.ico') }, ['Fatal error: Unable to set icon'])
   })
 
-  it('reports an error when the file version is invalid', function (done) {
-    rcedit(exePath, { 'file-version': 'foo' }, function (error) {
-      assert.ok(error instanceof Error)
-      assert.notStrictEqual(error.message.indexOf('Fatal error: Unable to parse version string for FileVersion'), -1)
-
-      done()
-    })
+  it('reports an error when the file version is invalid', async () => {
+    assertRceditError(exePath, { 'file-version': 'foo' }, ['Fatal error: Unable to parse version string for FileVersion'])
   })
 
-  it('reports an error when the product version is invalid', function (done) {
-    rcedit(exePath, { 'product-version': 'foo' }, function (error) {
-      assert.ok(error instanceof Error)
-      assert.notStrictEqual(error.message.indexOf('Fatal error: Unable to parse version string for ProductVersion'), -1)
-
-      done()
-    })
+  it('reports an error when the product version is invalid', async () => {
+    assertRceditError(exePath, { 'product-version': 'foo' }, ['Fatal error: Unable to parse version string for ProductVersion'])
   })
 })
