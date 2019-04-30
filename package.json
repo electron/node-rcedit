@@ -16,6 +16,9 @@
     "url": "https://github.com/electron/node-rcedit/issues"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">= 8.0.0"
+  },
   "devDependencies": {
     "@continuous-auth/semantic-release-npm": "^1.0.3",
     "got": "^9.6.0",
