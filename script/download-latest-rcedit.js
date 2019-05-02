@@ -4,10 +4,10 @@ const fs = require('fs')
 const got = require('got')
 const path = require('path')
 
-const downloadURL = 'https://ci.appveyor.com/api/projects/electron-bot/rcedit/artifacts/Default/rcedit.exe?job=Image:%20Visual%20Studio%202015&branch=master'
-const filePath = path.join(__dirname, '..', 'bin', 'rcedit.exe')
+const downloadURL = 'https://ci.appveyor.com/api/projects/zcbenz/rcedit/artifacts/Default/rcedit-x86.exe?job=Platform:%20Win32'
+const filePath = path.resolve(__dirname, '..', 'bin', 'rcedit.exe')
 
-process.on('uncaughtException', (error) => {
+process.on('uncaughtException', error => {
   console.log('Downloading rcedit.exe failed:', error.message)
 })
 
