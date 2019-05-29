@@ -5,12 +5,6 @@
 
 Node module to edit resources of Windows executables.
 
-## Building
-
-* Clone the repository
-* Run `npm install`
-* Run `npm test` to run the tests
-
 ## Docs
 
 ```js
@@ -40,3 +34,9 @@ On platforms other than Windows, you will need to have [Wine](http://winehq.org)
 
 `callback` is the `Function` called when the command completes. The function
 signature is `function (error)`.
+
+## Building
+
+* Clone the repository
+* Run `npm install`
+* Run `npm test` to run the tests
