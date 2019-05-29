@@ -28,7 +28,6 @@ steps-test: &steps-test
         key: v1-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
     - run: yarn test
 
-
 version: 2
 jobs:
   test-linux-8:
