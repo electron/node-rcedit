@@ -1,6 +1,6 @@
 {
   "name": "rcedit",
-  "version": "1.1.1",
+  "version": "0.0.0-development",
   "description": "Node module to edit resources of exe",
   "main": "lib/rcedit.js",
   "scripts": {
