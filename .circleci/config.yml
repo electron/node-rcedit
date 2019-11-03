@@ -42,7 +42,7 @@ step-install-os-dependencies: &step-install-os-dependencies
         Linux)
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt-get install --no-install-recommends -y wine32 wine
+          sudo apt-get install --no-install-recommends -y wine64 wine32 wine
         ;;
         Darwin)
           brew install wine
