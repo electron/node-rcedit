@@ -45,7 +45,7 @@ step-install-os-dependencies: &step-install-os-dependencies
           sudo apt-get install --no-install-recommends -y wine64 wine32 wine
         ;;
         Darwin)
-          brew install wine
+          brew cask install xquartz wine-stable
         ;;
       esac
 
