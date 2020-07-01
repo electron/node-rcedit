@@ -18,7 +18,7 @@ async function assertRceditError (exePath, options, messages) {
   } catch (error) {
     assert.ok(error instanceof Error)
     for (const message of messages) {
-      assert.ok(error.message.includes(message))
+      assert.ok(error.message.includes(message), `Expected "${message}" in error message:\n${error.message}`)
     }
   }
 }
@@ -106,21 +106,24 @@ describe('async rcedit(exePath, options)', function () {
   })
 
   it('reports an error when the .exe path does not exist', async () => {
-    assertRceditError(path.join(tempPath, 'does-not-exist.exe'), { 'file-version': '3.4.5.6' }, [
+    await assertRceditError(path.join(tempPath, 'does-not-exist.exe'), { 'file-version': '3.4.5.6' }, [
       'rcedit.exe failed with exit code 1.',
       'Unable to load file'
     ])
   })
 
   it('reports an error when the icon path does not exist', async () => {
-    assertRceditError(exePath, { icon: path.join(tempPath, 'does-not-exist.ico') }, ['Fatal error: Unable to set icon'])
+    await assertRceditError(exePath, { icon: path.join(tempPath, 'does-not-exist.ico') }, [
+      'Cannot open icon file',
+      'Fatal error: Unable to set icon'
+    ])
   })
 
   it('reports an error when the file version is invalid', async () => {
-    assertRceditError(exePath, { 'file-version': 'foo' }, ['Fatal error: Unable to parse version string for FileVersion'])
+    await assertRceditError(exePath, { 'file-version': 'foo' }, ['Fatal error: Unable to parse version string for FileVersion'])
   })
 
   it('reports an error when the product version is invalid', async () => {
-    assertRceditError(exePath, { 'product-version': 'foo' }, ['Fatal error: Unable to parse version string for ProductVersion'])
+    await assertRceditError(exePath, { 'product-version': 'foo' }, ['Fatal error: Unable to parse version string for ProductVersion'])
   })
 })
