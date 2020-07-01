@@ -18,7 +18,7 @@ async function assertRceditError (exePath, options, messages) {
   } catch (error) {
     assert.ok(error instanceof Error)
     for (const message of messages) {
-      assert.ok(error.message.includes(message))
+      assert.ok(error.message.includes(message), `Expected "${message}" in error message:\n${error.message}`)
     }
   }
 }
