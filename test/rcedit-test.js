@@ -113,7 +113,10 @@ describe('async rcedit(exePath, options)', function () {
   })
 
   it('reports an error when the icon path does not exist', async () => {
-    await assertRceditError(exePath, { icon: path.join(tempPath, 'does-not-exist.ico') }, ['Fatal error: Unable to set icon'])
+    await assertRceditError(exePath, { icon: path.join(tempPath, 'does-not-exist.ico') }, [
+      'Cannot open icon file',
+      'Fatal error: Unable to set icon'
+    ])
   })
 
   it('reports an error when the file version is invalid', async () => {
