@@ -22,7 +22,10 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">= 8.0.0"
+    "node": ">= 10.0.0"
+  },
+  "dependencies": {
+    "cross-spawn-windows-exe": "../../@malept/cross-spawn-windows-exe"
   },
   "devDependencies": {
     "@continuous-auth/semantic-release-npm": "^2.0.0",

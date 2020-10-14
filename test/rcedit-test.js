@@ -107,7 +107,7 @@ describe('async rcedit(exePath, options)', function () {
 
   it('reports an error when the .exe path does not exist', async () => {
     await assertRceditError(path.join(tempPath, 'does-not-exist.exe'), { 'file-version': '3.4.5.6' }, [
-      'rcedit.exe failed with exit code 1.',
+      'Command failed with a non-zero return code (1)',
       'Unable to load file'
     ])
   })
