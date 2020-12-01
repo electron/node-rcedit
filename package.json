@@ -37,6 +37,9 @@
     "typedoc": "^0.19.2",
     "typescript": "^4.1.2"
   },
+  "resolutions": {
+    "**/semver": "< 7"
+  },
   "tsd": {
     "directory": "test"
   }
