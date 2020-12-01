@@ -4,14 +4,16 @@
 
 Node module to edit resources of Windows executables.
 
-## Docs
+## Requirements
+
+On platforms other than Windows, you will need to have [Wine](http://winehq.org)
+1.6 or later installed and in the system path.
+
+## Usage
 
 ```javascript
 const rcedit = require('rcedit')
 ```
-
-On platforms other than Windows, you will need to have [Wine](http://winehq.org)
-1.6 or later installed and in the system path.
 
 ### `async rcedit(exePath, options)`
 
