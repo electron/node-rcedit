@@ -1336,8 +1336,10 @@ create-error-class@^3.0.0:
   dependencies:
     capture-stack-trace "^1.0.0"
 
-cross-spawn-windows-exe@../../@malept/cross-spawn-windows-exe:
+cross-spawn-windows-exe@^0.1.0:
   version "0.1.0"
+  resolved "https://registry.yarnpkg.com/cross-spawn-windows-exe/-/cross-spawn-windows-exe-0.1.0.tgz#98bac28d70f678c6d3936109c58f5a0883aa70da"
+  integrity sha512-9GEZNvFnTtIlxNc2hrMnyswUZW7NUo4tijkKYqiiKIdtymFijDruGQTt3QEf2g7t8T6pcpgf62C1LRgD3Qktyg==
   dependencies:
     "@malept/cross-spawn-promise" "^1.1.0"
     is-wsl "^2.2.0"
