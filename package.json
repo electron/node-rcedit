@@ -25,7 +25,7 @@
     "node": ">= 10.0.0"
   },
   "dependencies": {
-    "cross-spawn-windows-exe": "^1.0.0"
+    "cross-spawn-windows-exe": "^1.1.0"
   },
   "devDependencies": {
     "@continuous-auth/semantic-release-npm": "^2.0.0",
