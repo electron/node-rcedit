@@ -1299,10 +1299,10 @@ create-error-class@^3.0.0:
   dependencies:
     capture-stack-trace "^1.0.0"
 
-cross-spawn-windows-exe@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/cross-spawn-windows-exe/-/cross-spawn-windows-exe-1.0.0.tgz#b6a44ef7a04dfb678351a41a5d8faf021b1b0bc4"
-  integrity sha512-WZzs4Ofgi/OBs1vkLmtEUX/6JjkTNWsXJqKDwIdW4lFsSzMcsGsf1OiELZL3waE/HzRO6V27cJpzqYYQRUGShQ==
+cross-spawn-windows-exe@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/cross-spawn-windows-exe/-/cross-spawn-windows-exe-1.1.0.tgz#823e7cb25cbe911ba5e2843b3de98edd923e909b"
+  integrity sha512-mLcudzsdGnF1sN2f9760Tbc8x64WaS2FD4VWk4zbk9rNl/b2jzy57zbPJ0uYRgrdc9wsXE2iEM9fu0iYDTGllA==
   dependencies:
     "@malept/cross-spawn-promise" "^1.1.0"
     is-wsl "^2.2.0"
@@ -2931,9 +2931,9 @@ is-date-object@^1.0.1:
   integrity sha512-USlDT524woQ08aoZFzh3/Z6ch9Y/EWXEHQ/AaRN0SkKq4t2Jw2R2339tSXmwuVoY7LLlBCbOIlx2myP/L5zk0g==
 
 is-docker@^2.0.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/is-docker/-/is-docker-2.1.1.tgz#4125a88e44e450d384e09047ede71adc2d144156"
-  integrity sha512-ZOoqiXfEwtGknTiuDEy8pN2CfE3TxMHprvNer1mXiqwkOT77Rw3YVrUQ52EqAOU3QAWDQ+bQdx7HJzrv7LS2Hw==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/is-docker/-/is-docker-2.2.1.tgz#33eeabe23cfe86f14bde4408a02c0cfb853acdaa"
+  integrity sha512-F+i2BKsFrH66iaUFc0woD8sLy8getkwTwtOBjvs56Cx4CgJDeKQeqfz8wAYiSb8JOprWhHH5p77PbmYCvvUuXQ==
 
 is-extglob@^2.1.1:
   version "2.1.1"
