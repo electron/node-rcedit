@@ -12,14 +12,14 @@ step-restore-brew-cache: &step-restore-brew-cache
     paths:
       - /usr/local/Homebrew
     keys:
-      - v1-brew-cache-{{ arch }}
+      - v2-brew-cache-{{ arch }}
 
 step-save-brew-cache: &step-save-brew-cache
   save_cache:
     name: Persisting Homebrew cache
     paths:
       - /usr/local/Homebrew
-    key: v1-brew-cache-{{ arch }}
+    key: v2-brew-cache-{{ arch }}
 
 step-restore-cache: &step-restore-cache
   restore_cache:
