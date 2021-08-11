@@ -44,10 +44,8 @@ step-install-os-dependencies: &step-install-os-dependencies
           sudo apt-get install --no-install-recommends -y wine64 wine32 wine
         ;;
         Darwin)
-          # Per Homebrew recommendations
-          git -C /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core fetch --unshallow
-          git -C /usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask fetch --unshallow
-          brew install --cask xquartz wine-stable
+          brew install --cask xquartz
+          brew install --cask --no-quarantine wine-stable
         ;;
       esac
 
