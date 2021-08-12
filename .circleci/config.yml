@@ -45,7 +45,10 @@ step-install-os-dependencies: &step-install-os-dependencies
         ;;
         Darwin)
           brew install --cask xquartz
-          brew install --cask --no-quarantine wine-stable
+          # TODO: use first-party wine-stable when winehq generates installers again
+          # See: https://bugs.winehq.org/show_bug.cgi?id=49167
+          brew tap gcenx/wine
+          brew install --cask --no-quarantine gcenx-wine-stable
         ;;
       esac
 
