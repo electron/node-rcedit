@@ -37,6 +37,13 @@ declare namespace rcedit {
     ProductName?: string
   }
   /**
+   * Resource strings. See [string table](https://docs.microsoft.com/en-us/windows/win32/menurc/stringtable-resource)
+   * for details.
+   */
+  interface ResourceStrings {
+    [n: number]: string
+  }
+  /**
    * EXE metadata that can be changed.
    */
   interface Options {
@@ -62,6 +69,10 @@ declare namespace rcedit {
      * XML that is to be embedded in the EXE.
      */
     'application-manifest'?: string
+    /**
+     * Set resource strings.
+     */
+    'resource-string'?: ResourceStrings
   }
 }
 
