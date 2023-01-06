@@ -47,8 +47,7 @@ step-install-os-dependencies: &step-install-os-dependencies
           brew install --cask xquartz
           # TODO: use first-party wine-stable when winehq generates installers again
           # See: https://bugs.winehq.org/show_bug.cgi?id=49167
-          brew tap gcenx/wine
-          brew install --cask --no-quarantine gcenx-wine-stable
+          brew install --cask --no-quarantine gcenx/wine/wine-stable-legacy
         ;;
       esac
 
