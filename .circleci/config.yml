@@ -93,7 +93,7 @@ jobs:
     <<: *steps-linux-win
   test-mac:
     macos:
-      xcode: "10.2.0"
+      xcode: "13.3.0"
     <<: *steps-mac
   test-windows:
     executor:
