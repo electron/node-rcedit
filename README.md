@@ -40,5 +40,5 @@ Returns a `Promise` with no value.
 ## Building
 
 * Clone the repository
-* Run `npm install`
-* Run `npm test` to run the tests
+* Run `yarn install`
+* Run `yarn test` to run the tests
