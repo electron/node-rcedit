@@ -4,6 +4,10 @@
   "description": "Node module to edit resources of exe",
   "main": "lib/rcedit.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "bin",
+    "lib/index.d.ts"
+  ],
   "scripts": {
     "docs:build": "node script/build-docs.js",
     "mocha": "mocha test/*.js",
