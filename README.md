@@ -1,6 +1,7 @@
 # node-rcedit
 
-[![CircleCI build status](https://circleci.com/gh/electron/node-rcedit/tree/master.svg?style=svg)](https://circleci.com/gh/electron/node-rcedit/tree/master)
+[![CircleCI build status](https://circleci.com/gh/electron/node-rcedit/tree/master.svg?style=shield)](https://circleci.com/gh/electron/node-rcedit/tree/master)
+[![NPM package](https://img.shields.io/npm/v/rcedit)](https://npm.im/rcedit)
 
 Node module to edit resources of Windows executables.
 
@@ -39,5 +40,5 @@ Returns a `Promise` with no value.
 ## Building
 
 * Clone the repository
-* Run `npm install`
-* Run `npm test` to run the tests
+* Run `yarn install`
+* Run `yarn test` to run the tests
