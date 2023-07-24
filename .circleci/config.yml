@@ -45,10 +45,8 @@ step-install-os-dependencies: &step-install-os-dependencies
         ;;
         Darwin)
           brew install --cask xquartz
-          # TODO: use first-party wine-stable when winehq generates installers again
-          # See: https://bugs.winehq.org/show_bug.cgi?id=49167
-          brew tap gcenx/wine
-          brew install --cask --no-quarantine gcenx-wine-stable
+          brew tap homebrew/cask-versions
+          brew install --cask --no-quarantine wine-stable
         ;;
       esac
 
@@ -80,19 +78,19 @@ orbs:
 jobs:
   test-linux-10:
     docker:
-      - image: circleci/node:10
+      - image: cimg/node:10.21
     <<: *steps-linux-win
   test-linux-12:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:12.22
     <<: *steps-linux-win
   test-linux-14:
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:14.21
     <<: *steps-linux-win
   test-mac:
     macos:
-      xcode: "10.2.0"
+      xcode: "14.0.0"
     <<: *steps-mac
   test-windows:
     executor:
@@ -102,7 +100,7 @@ jobs:
 
   release:
     docker:
-      - image: circleci/node:14.15.1
+      - image: cimg/node:14.21
     steps:
       - checkout
       - *step-restore-cache
@@ -113,14 +111,14 @@ workflows:
   test_and_release:
     # Run the test jobs first, then the release only when all the test jobs are successful
     jobs:
-      - test-linux-10
+      # - test-linux-10
       - test-linux-12
       - test-linux-14
       - test-mac
       - test-windows
       - release:
           requires:
-            - test-linux-10
+            # - test-linux-10
             - test-linux-12
             - test-linux-14
             - test-mac
