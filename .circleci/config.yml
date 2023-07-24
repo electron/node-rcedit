@@ -75,6 +75,7 @@ steps-mac: &steps-mac
 version: 2.1
 orbs:
   win: circleci/windows@1.0.0
+  cfa: continuousauth/npm@1.0.2
 jobs:
   test-linux-10:
     docker:
@@ -90,7 +91,7 @@ jobs:
     <<: *steps-linux-win
   test-mac:
     macos:
-      xcode: "14.0.0"
+      xcode: "14.2.0"
     <<: *steps-mac
   test-windows:
     executor:
@@ -98,16 +99,7 @@ jobs:
       shell: bash.exe
     <<: *steps-linux-win
 
-  release:
-    docker:
-      - image: cimg/node:14.21
-    steps:
-      - checkout
-      - *step-restore-cache
-      - run: yarn
-      - run: npx semantic-release
 workflows:
-  version: 2
   test_and_release:
     # Run the test jobs first, then the release only when all the test jobs are successful
     jobs:
@@ -116,7 +108,7 @@ workflows:
       - test-linux-14
       - test-mac
       - test-windows
-      - release:
+      - cfa/release:
           requires:
             # - test-linux-10
             - test-linux-12
@@ -127,3 +119,4 @@ workflows:
             branches:
               only:
                 - master
+          context: cfa-release
