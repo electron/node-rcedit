@@ -11,8 +11,7 @@
     "lint": "npm run lint:js && npm run lint:ts",
     "lint:js": "standard",
     "lint:ts": "ts-standard",
-    "tsd": "tsd",
-    "postinstall": "patch-package"
+    "tsd": "tsd"
   },
   "repository": {
     "type": "git",
@@ -32,8 +31,6 @@
     "@continuous-auth/semantic-release-npm": "^2.0.0",
     "got": "^11.8.0",
     "mocha": "^8.2.1",
-    "patch-package": "^6.5.1",
-    "rcinfo": "^0.1.3",
     "standard": "^16.0.3",
     "temp": "^0.9.4",
     "ts-standard": "^10.0.0",
