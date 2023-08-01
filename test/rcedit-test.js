@@ -5,11 +5,37 @@ const fs = require('fs')
 const path = require('path')
 const { promisify } = require('util')
 const rcedit = require('..')
-const rcinfo = promisify(require('rcinfo'))
+const { canRunWindowsExeNatively, is64BitArch, spawnExe } = require('cross-spawn-windows-exe')
 const temp = require('temp').track()
 
 const copyFile = promisify(fs.copyFile)
 const readFile = promisify(fs.readFile)
+
+// Replicate the functionality of the rcinfo npm package using rcedit
+async function rcinfo (exe) {
+  const rceditExe = is64BitArch(process.arch) ? 'rcedit-x64.exe' : 'rcedit.exe'
+  const rcedit = path.resolve(__dirname, '..', 'bin', rceditExe)
+
+  const spawnOptions = {
+    env: { ...process.env }
+  }
+
+  if (!canRunWindowsExeNatively()) {
+    // Suppress "fixme:" stderr log messages
+    spawnOptions.env.WINEDEBUG = '-all'
+  }
+
+  const getVersionString = (key) => spawnExe(rcedit, [exe, '--get-version-string', key], spawnOptions)
+
+  return {
+    CompanyName: await getVersionString('CompanyName'),
+    FileDescription: await getVersionString('FileDescription'),
+    LegalCopyright: await getVersionString('LegalCopyright'),
+    ProductName: await getVersionString('ProductName'),
+    FileVersion: await getVersionString('FileVersion'),
+    ProductVersion: await getVersionString('ProductVersion')
+  }
+}
 
 async function assertRceditError (exePath, options, messages) {
   try {
@@ -75,14 +101,14 @@ describe('async rcedit(exePath, options)', function () {
     await rcedit(exePath, { 'product-version': '1' })
 
     const info = await rcinfo(exePath)
-    assert.strictEqual(info.ProductVersion, '1.0.0.0')
+    assert.strictEqual(info.ProductVersion, '1')
   })
 
   it('supports a product version of 1.0', async () => {
     await rcedit(exePath, { 'product-version': '1.0' })
 
     const info = await rcinfo(exePath)
-    assert.strictEqual(info.ProductVersion, '1.0.0.0')
+    assert.strictEqual(info.ProductVersion, '1.0')
   })
 
   it('supports setting requestedExecutionLevel to requireAdministrator', async () => {
