@@ -45,10 +45,8 @@ step-install-os-dependencies: &step-install-os-dependencies
         ;;
         Darwin)
           brew install --cask xquartz
-          # TODO: use first-party wine-stable when winehq generates installers again
-          # See: https://bugs.winehq.org/show_bug.cgi?id=49167
-          brew tap gcenx/wine
-          brew install --cask --no-quarantine gcenx-wine-stable
+          brew tap homebrew/cask-versions
+          brew install --cask --no-quarantine wine-stable
         ;;
       esac
 
@@ -77,10 +75,11 @@ steps-mac: &steps-mac
 version: 2.1
 orbs:
   win: circleci/windows@1.0.0
+  cfa: continuousauth/npm@1.0.2
 jobs:
   test-linux-14:
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:14.21
     <<: *steps-linux-win
   test-linux-16:
     docker:
@@ -92,7 +91,7 @@ jobs:
     <<: *steps-linux-win
   test-mac:
     macos:
-      xcode: "10.2.0"
+      xcode: "14.2.0"
     <<: *steps-mac
   test-windows:
     executor:
@@ -100,16 +99,7 @@ jobs:
       shell: bash.exe
     <<: *steps-linux-win
 
-  release:
-    docker:
-      - image: circleci/node:14.15.1
-    steps:
-      - checkout
-      - *step-restore-cache
-      - run: yarn
-      - run: npx semantic-release@17.4.5
 workflows:
-  version: 2
   test_and_release:
     # Run the test jobs first, then the release only when all the test jobs are successful
     jobs:
@@ -118,7 +108,7 @@ workflows:
       - test-linux-18
       - test-mac
       - test-windows
-      - release:
+      - cfa/release:
           requires:
             - test-linux-14
             - test-linux-16
@@ -129,3 +119,4 @@ workflows:
             branches:
               only:
                 - master
+          context: cfa-release
