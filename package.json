@@ -39,7 +39,7 @@
     "temp": "^0.9.4",
     "ts-standard": "^12.0.2",
     "tsd": "^0.25.0",
-    "typedoc": "^0.20.0-beta.27",
+    "typedoc": "^0.24.8",
     "typescript": "^4.1.2"
   },
   "tsd": {
