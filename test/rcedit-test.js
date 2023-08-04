@@ -131,6 +131,18 @@ describe('async rcedit(exePath, options)', function () {
     assert.ok(exeData.includes('requireAdministrator'))
   })
 
+  it('supports setting resource strings', async () => {
+    let exeData = await readFile(exePath, 'utf16le')
+    assert.ok(!exeData.includes('bonfire'))
+    assert.ok(!exeData.includes('mumbai'))
+
+    await rcedit(exePath, { 'resource-string': { 1: 'bonfire', 2: 'mumbai' } })
+
+    exeData = await readFile(exePath, 'utf16le')
+    assert.ok(exeData.includes('bonfire'))
+    assert.ok(exeData.includes('mumbai'))
+  })
+
   it('reports an error when the .exe path does not exist', async () => {
     await assertRceditError(path.join(tempPath, 'does-not-exist.exe'), { 'file-version': '3.4.5.6' }, [
       'Command failed with a non-zero return code (1)',

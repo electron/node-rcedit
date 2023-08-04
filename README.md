@@ -34,6 +34,8 @@ const rcedit = require('rcedit')
 * `application-manifest` - String path to a local manifest file to use.
   See [here](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374191.aspx)
   for more details.
+* `resource-string` - An object in the form of `{ [id]: value }` to add to the
+  [string table](https://docs.microsoft.com/en-us/windows/win32/menurc/stringtable-resource).
 
 Returns a `Promise` with no value.
 
