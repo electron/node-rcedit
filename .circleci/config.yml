@@ -84,5 +84,5 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
           context: cfa-release
