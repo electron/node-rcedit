@@ -64,6 +64,14 @@ workflows:
     jobs:
       - test:
           name: test-<< matrix.executor >>-<< matrix.node-version >>
+          pre-steps:
+            - when:
+                condition:
+                  and:
+                    - equal: [ node/macos, << matrix.executor >> ]
+                    - equal: [ '14.16', << matrix.node-version >> ]
+                steps:
+                  - node/install-rosetta
           matrix:
             alias: test
             parameters:
