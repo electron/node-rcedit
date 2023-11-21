@@ -80,10 +80,11 @@ workflows:
                 - node/macos
                 - node/windows
               node-version:
-                - 20.2.0
-                - 18.14.0
-                - 16.19.0
-                - 14.19.0
+                - '20.9'
+                - '18.17'
+                - '16.20'
+                # Stay below 14.17.0 or nvm tries to download arm64 artifacts which don't exist
+                - '14.16'd 
       - cfa/release:
           requires:
             - test
