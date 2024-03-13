@@ -84,7 +84,7 @@ workflows:
                 - '18.17'
                 - '16.20'
                 # Stay below 14.17.0 or nvm tries to download arm64 artifacts which don't exist
-                - '14.16'd 
+                - '14.16'
       - cfa/release:
           requires:
             - test
