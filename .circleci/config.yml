@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   cfa: continuousauth/npm@2.1.0
-  node: electronjs/node@2.1.0
+  node: electronjs/node@2.2.1
 
 jobs:
   test:
@@ -65,11 +65,11 @@ workflows:
       - test:
           name: test-<< matrix.executor >>-<< matrix.node-version >>
           pre-steps:
+            # rc-edit.exe does not support arm64
             - when:
                 condition:
                   and:
                     - equal: [ node/macos, << matrix.executor >> ]
-                    - equal: [ '14.16', << matrix.node-version >> ]
                 steps:
                   - node/install-rosetta
           matrix:
@@ -83,8 +83,10 @@ workflows:
                 - '20.9'
                 - '18.17'
                 - '16.20'
-                # Stay below 14.17.0 or nvm tries to download arm64 artifacts which don't exist
-                - '14.16'd 
+                - '14.21'
+            exclude:
+              - executor: node/macos
+                node-version: '14.21'
       - cfa/release:
           requires:
             - test
