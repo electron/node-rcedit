@@ -64,7 +64,14 @@ workflows:
     jobs:
       - test:
           name: test-<< matrix.executor >>-<< matrix.node-version >>
-
+          pre-steps:
+            # rc-edit.exe does not support arm64
+            - when:
+                condition:
+                  and:
+                    - equal: [ node/macos, << matrix.executor >> ]
+                steps:
+                  - node/install-rosetta
           matrix:
             alias: test
             parameters:
