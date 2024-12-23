@@ -50,7 +50,7 @@ async function assertRceditError (exePath, options, messages) {
 }
 
 describe('async rcedit(exePath, options)', function () {
-  this.timeout(90000)
+  this.timeout(1200000)
 
   let exePath = null
   let tempPath = null

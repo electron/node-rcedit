@@ -1,0 +1,62 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '0 22 * * 3'
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test
+    strategy:
+      matrix:
+        node-version:
+          - '20.9'
+          - '18.17'
+          - '16.20'
+          - '14.21'
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+    runs-on: "${{ matrix.os }}"
+    steps:
+      # rc-edit.exe does not support arm64
+      - name: Install Rosetta
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+      - name: Homebrew Cache
+        if: ${{ matrix.os == 'macos-latest' }}
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: /usr/local/Homebrew
+          key: v1-brew-cache-${{ matrix.os }}
+      - name: Install OS Dependencies (Linux)
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y wine64 wine32 wine
+      - name: Install OS Dependencies (macOS)
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          brew install --cask xquartz
+          brew install --cask --no-quarantine wine-stable
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Setup Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: "${{ matrix.node-version }}"
+          cache: 'yarn'
+          architecture: ${{ matrix.node-version == '14.21' && 'x64' || env.RUNNER_ARCH }}
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Test
+        run: yarn test
