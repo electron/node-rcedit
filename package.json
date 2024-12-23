@@ -28,6 +28,9 @@
   "engines": {
     "node": ">= 14.0.0"
   },
+  "publishConfig": {
+    "provenance": true
+  },
   "dependencies": {
     "cross-spawn-windows-exe": "^1.1.0"
   },
