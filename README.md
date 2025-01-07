@@ -1,6 +1,6 @@
 # node-rcedit
 
-[![CircleCI build status](https://circleci.com/gh/electron/node-rcedit/tree/main.svg?style=shield)](https://circleci.com/gh/electron/node-rcedit/tree/main)
+[![Test](https://github.com/electron/node-rcedit/actions/workflows/test.yml/badge.svg)](https://github.com/electron/node-rcedit/actions/workflows/test.yml)
 [![NPM package](https://img.shields.io/npm/v/rcedit)](https://npm.im/rcedit)
 
 Node module to edit resources of Windows executables.
