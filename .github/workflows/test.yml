@@ -14,6 +14,8 @@ permissions:
 jobs:
   test:
     name: Test
+    env:
+      WINE_BINARY: 'wine'
     strategy:
       matrix:
         node-version:
