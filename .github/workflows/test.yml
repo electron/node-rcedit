@@ -25,7 +25,7 @@ jobs:
           - '14.21'
         os:
           - macos-latest
-          - ubuntu-22.04
+          - ubuntu-latest
           - windows-latest
     runs-on: "${{ matrix.os }}"
     steps:
@@ -40,7 +40,7 @@ jobs:
           path: /usr/local/Homebrew
           key: v1-brew-cache-${{ matrix.os }}
       - name: Install OS Dependencies (Linux)
-        if: ${{ matrix.os == 'ubuntu-22.04' }}
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
