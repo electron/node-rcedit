@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/node22/tsconfig.json",
   "compilerOptions": {
+    "lib": ["es2022"],
     "outDir": "dist",
     "sourceMap": true,
     "rootDir": ".",
