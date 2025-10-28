@@ -15,7 +15,7 @@ process.on('uncaughtException', error => {
   console.log('Downloading rcedit executables failed:', error.message)
 })
 
-async function download(url, filePath) {
+async function download (url, filePath) {
   const response = await fetch(url)
   if (!response.ok) throw new Error(`Failed to fetch ${url}: ${response.statusText}`)
   await pipeline(Readable.fromWeb(response.body), fs.createWriteStream(filePath))
