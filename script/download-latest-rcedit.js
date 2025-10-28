@@ -2,7 +2,8 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import got from 'got'
+import { pipeline } from 'node:stream/promises'
+import { Readable } from 'node:stream'
 
 const downloadURL32 = 'https://github.com/electron/rcedit/releases/download/v2.0.0/rcedit-x86.exe'
 const filePath32 = path.resolve(import.meta.dirname, '..', 'bin', 'rcedit.exe')
@@ -14,5 +15,13 @@ process.on('uncaughtException', error => {
   console.log('Downloading rcedit executables failed:', error.message)
 })
 
-got.stream(downloadURL32).pipe(fs.createWriteStream(filePath32))
-got.stream(downloadURL64).pipe(fs.createWriteStream(filePath64))
+async function download(url, filePath) {
+  const response = await fetch(url)
+  if (!response.ok) throw new Error(`Failed to fetch ${url}: ${response.statusText}`)
+  await pipeline(Readable.fromWeb(response.body), fs.createWriteStream(filePath))
+}
+
+await Promise.all([
+  download(downloadURL32, filePath32),
+  download(downloadURL64, filePath64)
+])

@@ -37,7 +37,6 @@
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.2",
-    "got": "^14.6.1",
     "mocha": "^10.8.2",
     "standard": "^17.1.0",
     "temp": "^0.9.4",
