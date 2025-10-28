@@ -5,10 +5,10 @@
  * @param exePath - the path to the Windows executable to be modified
  * @param options - metadata used to update the Windows executable
  */
-declare function rcedit (exePath: string, options: rcedit.Options): Promise<void>
+export declare function rcedit (exePath: string, options: rcedit.Options): Promise<void>
 
 /* eslint-disable-next-line no-redeclare */
-declare namespace rcedit {
+export declare namespace rcedit {
   /** See [MSDN](https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/deployment/trustinfo-element-clickonce-application?view=vs-2015#requestedexecutionlevel) for details. */
   type RequestedExecutionLevel = 'asInvoker' | 'highestAvailable' | 'requireAdministrator'
   /**
@@ -75,5 +75,3 @@ declare namespace rcedit {
     'resource-string'?: ResourceStrings
   }
 }
-
-export = rcedit
