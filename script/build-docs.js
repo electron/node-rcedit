@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict'
 
-const { Application } = require('typedoc')
+import { Application } from 'typedoc'
 
 const config = {
   excludeExternals: true,

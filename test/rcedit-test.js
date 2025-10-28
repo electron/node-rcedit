@@ -1,20 +1,18 @@
 /* eslint-env node, mocha */
 
-const assert = require('assert')
-const fs = require('fs')
-const path = require('path')
-const { promisify } = require('util')
-const rcedit = require('..')
-const { canRunWindowsExeNatively, is64BitArch, spawnExe } = require('cross-spawn-windows-exe')
-const temp = require('temp').track()
+import assert from 'node:assert'
+import fs from 'node:fs/promises'
+import path from 'node:path'
+import rcedit from '../lib/rcedit.js'
+import { canRunWindowsExeNatively, is64BitArch, spawnExe } from 'cross-spawn-windows-exe'
+import temp from 'temp'
 
-const copyFile = promisify(fs.copyFile)
-const readFile = promisify(fs.readFile)
+temp.track()
 
 // Replicate the functionality of the rcinfo npm package using rcedit
 async function rcinfo (exe) {
   const rceditExe = is64BitArch(process.arch) ? 'rcedit-x64.exe' : 'rcedit.exe'
-  const rcedit = path.resolve(__dirname, '..', 'bin', rceditExe)
+  const rcedit = path.resolve(import.meta.dirname, '..', 'bin', rceditExe)
 
   const spawnOptions = {
     env: { ...process.env }
@@ -58,8 +56,8 @@ describe('async rcedit(exePath, options)', function () {
   beforeEach(async () => {
     tempPath = temp.mkdirSync('node-rcedit-')
     exePath = path.join(tempPath, 'electron.exe')
-    const fixturesExePath = path.join(__dirname, 'fixtures', 'electron.exe')
-    await copyFile(fixturesExePath, exePath)
+    const fixturesExePath = path.join(import.meta.dirname, 'fixtures', 'electron.exe')
+    await fs.copyFile(fixturesExePath, exePath)
   })
 
   it('updates the information in the executable', async () => {
@@ -72,7 +70,7 @@ describe('async rcedit(exePath, options)', function () {
       },
       'file-version': '3.4.5.6',
       'product-version': '4.5.6.7',
-      icon: path.join(__dirname, 'fixtures', 'app.ico')
+      icon: path.join(import.meta.dirname, 'fixtures', 'app.ico')
     })
     const info = await rcinfo(exePath)
 
@@ -86,7 +84,7 @@ describe('async rcedit(exePath, options)', function () {
 
   it('supports non-ASCII characters in the .exe path', async () => {
     const unicodePath = path.join(path.dirname(exePath), 'äeiöü.exe')
-    await promisify(fs.rename)(exePath, unicodePath)
+    await fs.rename(exePath, unicodePath)
 
     await rcedit(unicodePath, {
       'version-string': {
@@ -112,33 +110,33 @@ describe('async rcedit(exePath, options)', function () {
   })
 
   it('supports setting requestedExecutionLevel to requireAdministrator', async () => {
-    let exeData = await readFile(exePath, 'utf8')
+    let exeData = await fs.readFile(exePath, 'utf8')
     assert.ok(!exeData.includes('requireAdministrator'))
 
     await rcedit(exePath, { 'requested-execution-level': 'requireAdministrator' })
 
-    exeData = await readFile(exePath, 'utf8')
+    exeData = await fs.readFile(exePath, 'utf8')
     assert.ok(exeData.includes('requireAdministrator'))
   })
 
   it('supports replacing the manifest with a specified manifest file', async () => {
-    let exeData = await readFile(exePath, 'utf8')
+    let exeData = await fs.readFile(exePath, 'utf8')
     assert.ok(!exeData.includes('requireAdministrator'))
 
-    await rcedit(exePath, { 'application-manifest': path.join(__dirname, 'fixtures', 'electron.manifest') })
+    await rcedit(exePath, { 'application-manifest': path.join(import.meta.dirname, 'fixtures', 'electron.manifest') })
 
-    exeData = await readFile(exePath, 'utf8')
+    exeData = await fs.readFile(exePath, 'utf8')
     assert.ok(exeData.includes('requireAdministrator'))
   })
 
   it('supports setting resource strings', async () => {
-    let exeData = await readFile(exePath, 'utf16le')
+    let exeData = await fs.readFile(exePath, 'utf16le')
     assert.ok(!exeData.includes('bonfire'))
     assert.ok(!exeData.includes('mumbai'))
 
     await rcedit(exePath, { 'resource-string': { 1: 'bonfire', 2: 'mumbai' } })
 
-    exeData = await readFile(exePath, 'utf16le')
+    exeData = await fs.readFile(exePath, 'utf16le')
     assert.ok(exeData.includes('bonfire'))
     assert.ok(exeData.includes('mumbai'))
   })

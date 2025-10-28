@@ -13,7 +13,7 @@ On platforms other than Windows, you will need to have [Wine](https://winehq.org
 ## Usage
 
 ```javascript
-const rcedit = require('rcedit')
+import rcedit from 'rcedit'
 ```
 
 ### `async rcedit(exePath, options)`

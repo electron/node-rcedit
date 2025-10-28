@@ -140,6 +140,11 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
+"@tsconfig/node22@^22.0.2":
+  version "22.0.2"
+  resolved "https://registry.yarnpkg.com/@tsconfig/node22/-/node22-22.0.2.tgz#1e04e2c5cc946dac787d69bb502462a851ae51b6"
+  integrity sha512-Kmwj4u8sDRDrMYRoN9FDEcXD8UpBSaPQQ24Gz+Gamqfm7xxn+GBR7ge/Z7pK8OXNGyUzbSwJj+TH6B+DS/epyA==
+
 "@tsd/typescript@~4.9.3":
   version "4.9.3"
   resolved "https://registry.yarnpkg.com/@tsd/typescript/-/typescript-4.9.3.tgz#87beef743237707b02b88b10056fcf9f58840954"
