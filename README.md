@@ -13,7 +13,7 @@ On platforms other than Windows, you will need to have [Wine](https://winehq.org
 > [!NOTE]
 > Under the hood, this package relies on the [electron/rcedit](https://github.com/electron/rcedit)
 > binary to perform operations. A vendored executable is in the `/bin/` folder of the source code.
-> The latest version of this package uses `rcecit@2.0.0`.
+> The latest version of this package uses `rcedit@2.0.0`.
 
 ## Usage
 
