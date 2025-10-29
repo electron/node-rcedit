@@ -3,7 +3,7 @@
   "version": "0.0.0-development",
   "description": "Node module to edit resources of exe",
   "type": "module",
-  "main": "lib/rcedit.js",
+  "exports": "./lib/main.js",
   "types": "lib/index.d.ts",
   "files": [
     "bin",
