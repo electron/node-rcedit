@@ -19,10 +19,7 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - '20.9'
-          - '18.17'
-          - '16.20'
-          - '14.21'
+          - '22.12'
         os:
           - macos-latest
           - ubuntu-latest
@@ -57,8 +54,7 @@ jobs:
         with:
           node-version: "${{ matrix.node-version }}"
           cache: 'yarn'
-          architecture: ${{ matrix.node-version == '14.21' && 'x64' || env.RUNNER_ARCH }}
       - name: Install
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
       - name: Test
         run: yarn test

@@ -1,18 +1,27 @@
 #!/usr/bin/env node
 
-const fs = require('fs')
-const got = require('got')
-const path = require('path')
+import fs from 'node:fs'
+import path from 'node:path'
+import { pipeline } from 'node:stream/promises'
+import { Readable } from 'node:stream'
 
-const downloadURL32 = 'https://ci.appveyor.com/api/projects/zcbenz/rcedit/artifacts/Default/rcedit-x86.exe?job=Platform:%20Win32'
-const filePath32 = path.resolve(__dirname, '..', 'bin', 'rcedit.exe')
+const downloadURL32 = 'https://github.com/electron/rcedit/releases/download/v2.0.0/rcedit-x86.exe'
+const filePath32 = path.resolve(import.meta.dirname, '..', 'bin', 'rcedit.exe')
 
-const downloadURL64 = 'https://ci.appveyor.com/api/projects/zcbenz/rcedit/artifacts/Default/rcedit-x64.exe?job=Platform:%20x64'
-const filePath64 = path.resolve(__dirname, '..', 'bin', 'rcedit-x64.exe')
+const downloadURL64 = 'https://github.com/electron/rcedit/releases/download/v2.0.0/rcedit-x64.exe'
+const filePath64 = path.resolve(import.meta.dirname, '..', 'bin', 'rcedit-x64.exe')
 
 process.on('uncaughtException', error => {
   console.log('Downloading rcedit executables failed:', error.message)
 })
 
-got.stream(downloadURL32).pipe(fs.createWriteStream(filePath32))
-got.stream(downloadURL64).pipe(fs.createWriteStream(filePath64))
+async function download (url, filePath) {
+  const response = await fetch(url)
+  if (!response.ok) throw new Error(`Failed to fetch ${url}: ${response.statusText}`)
+  await pipeline(Readable.fromWeb(response.body), fs.createWriteStream(filePath))
+}
+
+await Promise.all([
+  download(downloadURL32, filePath32),
+  download(downloadURL64, filePath64)
+])

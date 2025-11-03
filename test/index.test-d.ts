@@ -1,5 +1,5 @@
 import { expectError } from 'tsd'
-import rcedit from '..'
+import { rcedit } from '..'
 
 await rcedit('foo.exe', {})
 await rcedit('foo.exe', { 'version-string': { CompanyName: 'FooCorp' }, 'requested-execution-level': 'requireAdministrator' })

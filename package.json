@@ -2,7 +2,8 @@
   "name": "rcedit",
   "version": "0.0.0-development",
   "description": "Node module to edit resources of exe",
-  "main": "lib/rcedit.js",
+  "type": "module",
+  "exports": "./lib/rcedit.js",
   "types": "lib/index.d.ts",
   "files": [
     "bin",
@@ -26,7 +27,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">= 14.0.0"
+    "node": ">= 22.12.0"
   },
   "publishConfig": {
     "provenance": true
@@ -35,16 +36,17 @@
     "cross-spawn-windows-exe": "^1.1.0"
   },
   "devDependencies": {
-    "got": "^11.8.0",
+    "@tsconfig/node22": "^22.0.2",
     "mocha": "^10.8.2",
     "standard": "^17.1.0",
     "temp": "^0.9.4",
     "ts-standard": "^12.0.2",
     "tsd": "^0.25.0",
     "typedoc": "^0.24.8",
-    "typescript": "^4.1.2"
+    "typescript": "^5.9.3"
   },
   "tsd": {
     "directory": "test"
-  }
+  },
+  "packageManager": "yarn@4.10.3+sha512.c38cafb5c7bb273f3926d04e55e1d8c9dfa7d9c3ea1f36a4868fa028b9e5f72298f0b7f401ad5eb921749eb012eb1c3bb74bf7503df3ee43fd600d14a018266f"
 }
