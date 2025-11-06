@@ -13,6 +13,6 @@ first before filing an issue here.
 
 ## Releases
 
-`node-rcedit` uses `semantic-release` plus a plugin named "continuous factor authentication" to
-publish new releases to NPM. When a pull request is merged, a new release is queued in CircleCI, and
+`node-rcedit` uses `semantic-release` plus trusted publishing to
+publish new releases to NPM. When a pull request is merged, a new release is queued in GitHub Actions, and
 a member of the Electron [Ecosystem Working Group](https://github.com/electron/governance/tree/main/wg-ecosystem) needs to approve it.
