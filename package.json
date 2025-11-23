@@ -3,12 +3,12 @@
   "version": "0.0.0-development",
   "description": "Node module to edit resources of exe",
   "type": "module",
-  "exports": "./lib/rcedit.js",
+  "exports": "./lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "bin",
     "lib/index.d.ts",
-    "lib/rcedit.js"
+    "lib/index.js"
   ],
   "scripts": {
     "docs:build": "node script/build-docs.js",

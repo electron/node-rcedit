@@ -4,7 +4,7 @@ import assert from 'node:assert'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
-import { rcedit } from '../lib/rcedit.js'
+import { rcedit } from '../lib/index.js'
 import { canRunWindowsExeNatively, is64BitArch, spawnExe } from 'cross-spawn-windows-exe'
 import temp from 'temp'
 
