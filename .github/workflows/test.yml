@@ -32,7 +32,7 @@ jobs:
         run: /usr/sbin/softwareupdate --install-rosetta --agree-to-license
       - name: Homebrew Cache
         if: ${{ matrix.os == 'macos-latest' }}
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: /usr/local/Homebrew
           key: v1-brew-cache-${{ matrix.os }}
